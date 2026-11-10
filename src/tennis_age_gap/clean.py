@@ -14,3 +14,8 @@ def _parse_matches_js(js_text):
     body = re.sub(r"^\s*var\s+\w+\s*=\s*", "", js_text)
     body = re.sub(r";\s*$", "", body)
     return json.loads(body)
+
+
+def _is_male_format(rows):
+    """Male files store opponent age as a decimal ('22.26'); female files store a birth date."""
+    return any("." in row[OPP_AGE_COL] for row in rows)
