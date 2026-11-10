@@ -43,3 +43,23 @@ def _opponent_ages(rows, match_dates, male):
     if male:
         return pd.to_numeric(raw, errors="coerce")
     return _years_between(_to_date(raw), match_dates)
+
+
+def _base_frame(rows, match_dates):
+    """Match date, opponent name, and win/loss result for every row."""
+    return pd.DataFrame({
+        "match_date": match_dates,
+        "opponent": [row[OPPONENT_COL] for row in rows],
+        "result": ["win" if row[RESULT_COL] == "W" else "loss" for row in rows],
+    })
+
+
+def _clean_matches(rows, player_dob):
+    """Build the plotting data frame from parsed rows and the player's birth date."""
+    dates = _to_date([row[DATE_COL] for row in rows])
+    matches = _base_frame(rows, dates)
+    matches["player_age"] = _years_between(pd.to_datetime(player_dob, format="%Y%m%d"), dates)
+    matches["opponent_age"] = _opponent_ages(rows, dates, _is_male_format(rows))
+    matches["age_diff"] = matches["player_age"] - matches["opponent_age"]
+    matches = matches.dropna(subset=["match_date", "age_diff"])
+    return matches.sort_values("match_date").reset_index(drop=True)
