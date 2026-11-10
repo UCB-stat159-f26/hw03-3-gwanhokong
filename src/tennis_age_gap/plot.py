@@ -36,3 +36,26 @@ def _style_axes(ax, age_diff):
     ax.set_axisbelow(True)
     for side in ("right", "bottom"):
         ax.spines[side].set_visible(False)
+
+
+def _add_legend(fig):
+    """One colored dot per match outcome, below the plot."""
+    handles = [Line2D([], [], marker="o", linestyle="", color=COLORS[key], label=LABELS[key])
+               for key in ("win", "loss")]
+    fig.legend(handles=handles, loc="outside lower center", ncol=2, frameon=False)
+
+
+def plot_age_gap(matches, title=None):
+    """Scatter plot of player age vs. age difference with each opponent, colored by result.
+
+    matches: data frame returned by get_career_matches().
+    title: optional title, e.g. "Serena Williams's Professional Matches".
+    Returns the matplotlib Axes so the plot can be customized further.
+    """
+    fig, ax = plt.subplots(figsize=(11, 6.5), layout="constrained")
+    _draw_points(ax, matches)
+    _style_axes(ax, matches["age_diff"])
+    _add_legend(fig)
+    if title:
+        fig.suptitle(title, fontweight="bold")
+    return ax
