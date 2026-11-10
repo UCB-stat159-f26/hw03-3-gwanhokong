@@ -34,3 +34,12 @@ def _fetch_career_js(slug):
             "Check the spelling of the player's name, e.g. 'Serena Williams'."
         )
     return js_text
+
+
+def _fetch_player_dob(slug, male):
+    """Download the player page (men: player.cgi, women: wplayer.cgi) and read the birth date."""
+    page = "player.cgi" if male else "wplayer.cgi"
+    dob = _parse_dob(_get_text(f"{BASE_URL}/cgi-bin/{page}?p={slug}") or "")
+    if dob is None:
+        raise ValueError(f"Could not find a birth date for '{slug}' on tennisabstract.com.")
+    return dob
