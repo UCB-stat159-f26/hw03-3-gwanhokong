@@ -19,3 +19,9 @@ def _parse_matches_js(js_text):
 def _is_male_format(rows):
     """Male files store opponent age as a decimal ('22.26'); female files store a birth date."""
     return any("." in row[OPP_AGE_COL] for row in rows)
+
+
+def _parse_dob(page_html):
+    """Extract the player's birth date ('YYYYMMDD') from a player page, or None."""
+    match = re.search(r"var dob\s*=\s*(\d{8})\s*;", page_html)
+    return match.group(1) if match else None
