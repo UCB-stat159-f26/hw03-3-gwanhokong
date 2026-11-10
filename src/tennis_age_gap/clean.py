@@ -35,3 +35,11 @@ def _to_date(values):
 def _years_between(start, end):
     """Elapsed time in years between two dates (works element-wise on Series)."""
     return (end - start).dt.days / 365.25
+
+
+def _opponent_ages(rows, match_dates, male):
+    """Opponent age in years: given directly in male files, derived from birth date in female files."""
+    raw = pd.Series([row[OPP_AGE_COL] for row in rows])
+    if male:
+        return pd.to_numeric(raw, errors="coerce")
+    return _years_between(_to_date(raw), match_dates)
