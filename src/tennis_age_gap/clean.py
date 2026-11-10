@@ -25,3 +25,13 @@ def _parse_dob(page_html):
     """Extract the player's birth date ('YYYYMMDD') from a player page, or None."""
     match = re.search(r"var dob\s*=\s*(\d{8})\s*;", page_html)
     return match.group(1) if match else None
+
+
+def _to_date(values):
+    """Convert 'YYYYMMDD' strings to dates; invalid or empty values become NaT."""
+    return pd.Series(pd.to_datetime(values, format="%Y%m%d", errors="coerce"))
+
+
+def _years_between(start, end):
+    """Elapsed time in years between two dates (works element-wise on Series)."""
+    return (end - start).dt.days / 365.25
