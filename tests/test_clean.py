@@ -36,3 +36,30 @@ def test_is_male_format(female_rows, male_rows):
 def test_parse_dob():
     assert _parse_dob("var fullname = 'X';\nvar dob = 19810926;") == "19810926"
     assert _parse_dob("<html>no birth date here</html>") is None
+
+
+def test_female_opponent_age_is_derived_from_birth_date(female_rows):
+    dates = _to_date([row[0] for row in female_rows])
+    ages = _opponent_ages(female_rows, dates, male=False)
+    assert ages[0] == pytest.approx(18.776, abs=1e-3)
+
+
+def test_male_opponent_age_is_read_directly(male_rows):
+    dates = _to_date([row[0] for row in male_rows])
+    ages = _opponent_ages(male_rows, dates, male=True)
+    assert list(ages) == pytest.approx([22.264202601, 24.2902121834, 18.7597535934])
+
+
+def test_clean_matches_female(female_rows):
+    matches = _clean_matches(female_rows, "19810926")
+    assert list(matches.columns) == [
+        "match_date", "opponent", "result", "player_age", "opponent_age", "age_diff"]
+    assert list(matches["result"]) == ["loss", "loss", "loss"]
+    assert matches["age_diff"][0] == pytest.approx(-4.684, abs=1e-3)
+
+
+def test_clean_matches_male(male_rows):
+    matches = _clean_matches(male_rows, "19860603")
+    assert sorted(matches["result"]) == ["loss", "loss", "win"]
+    assert matches["player_age"][0] == pytest.approx(15.272, abs=1e-3)
+    assert matches["age_diff"][0] == pytest.approx(-6.992, abs=1e-3)
