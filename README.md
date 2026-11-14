@@ -107,6 +107,8 @@ For some players the `Career.js` file holds only part of the career. Rafael Nada
 until 2024, but his file covers 2001-09-10 to 2016-10-10 (ages 15 to 30), so his plot stops
 at age 30. The package plots exactly what the career file contains, as the assignment specifies.
 
+tennisabstract.com may answer `429 Too Many Requests` when many players are requested in a row. The package then waits and retries up to three times (5, 15 and 30 seconds), so downloading several players back to back can take a little longer.
+
 ![Rafael Nadal](images/rafael_nadal.png)
 
 ## Personal reflections
