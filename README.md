@@ -122,3 +122,26 @@ The newest thing for me in testing was `monkeypatch`. I wanted to test that a me
 The code ran without errors, but when I opened Nadal's plot, the x-axis stopped at age 30. Nadal played until 2024, when he was 38, so this looked wrong. When I printed the date range, the data only went from September 2001 to October 2016. This showed me that passing tests does not guarantee correct results, and that looking at the output with my own eyes is a step I can't skip. However, this was not a bug in my code but a limitation of the data source. Since the assignment asks us to use the Career.js file, I kept the code as it is and instead recorded the issue as a known limitation in this README. I think reproducible research is not only about others getting the same result when they run the same code, but also about telling them what that result includes and what it leaves out.
 
 Looking back, this was a lesson I could apply directly to my earlier projects. In my H1B Sponsorship Analytics project, the USCIS files had different encodings (UTF-16) and column names, so I fixed them by hand every time. If I had written a small function to detect the file format and tests with a few sample rows from each format, like I did here for the men's and women's files, I probably would not have kept repeating the same fixes.
+
+## AI usage disclosure
+
+**Tool:** Claude (Anthropic), model Claude Opus 5.5
+
+
+## AI Usage Disclosure
+
+**AI Tool:** Claude (Anthropic), Claude Opus 5.5
+
+I used Claude Opus 5.5 as a learning and development assistant while working on this assignment. My primary goal was to better understand Python package development, improve code organization, and explore effective approaches to data processing and testing.
+
+Specifically, I used AI assistance for the following purposes:
+
+- **Conceptual understanding:** To clarify concepts related to Python package structure, data parsing, and unit testing.
+- **Code development:** To discuss possible implementation approaches, troubleshoot errors, and improve code readability and organization.
+- **Testing:** To better understand how to design unit tests using mock data without making requests to live servers.
+- **Documentation:** To improve the clarity and organization of the README and code documentation.
+
+I treated AI-generated suggestions as references rather than automatically accepting them. I reviewed the suggested approaches, tested the code, and made adjustments based on my understanding of the assignment requirements.
+
+I take responsibility for the final implementation, including its functionality, correctness, and documentation. AI served as a supporting tool throughout the development process rather than a substitute for understanding the code.
+
